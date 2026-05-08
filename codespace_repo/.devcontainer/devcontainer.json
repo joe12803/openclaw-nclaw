@@ -1,0 +1,31 @@
+{
+  "name": "OpenClaw Development Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    },
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "forwardPorts": [7860],
+  "portsAttributes": {
+    "7860": {
+      "label": "JupyterLab",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code pm2 pnpm && pip install jupyterlab",
+  "postStartCommand": "pm2 start \"jupyter lab --ip=0.0.0.0 --port=7860 --NotebookApp.token=ab87036181 --no-browser --allow-root --ServerApp.base_url=/ --ServerApp.default_url=/lab --ServerApp.disable_check_xsrf=True --ServerApp.allow_origin='*'\" --name jupyter"
+}
